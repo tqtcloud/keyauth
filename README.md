@@ -10,6 +10,10 @@ db.auth("admin", "123456")
 use keyauth
 db.createUser({user: "keyauth", pwd: "123456", roles: [{ role: "dbOwner", db: "keyauth" }]})
 ```
+注册中心
+```shell
+使用 0.0.5 版本初始化MongoDB以及注册
+```
 
 
 ## 架构图
