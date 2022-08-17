@@ -1,4 +1,4 @@
-module github/tqtcloud/keyauth
+module github.com/tqtcloud/keyauth
 
 go 1.18
 
