@@ -1,6 +1,15 @@
-# keyauth
+# keyauth-g7
 
-权限中心
+用户中心
+
+## Mongodb
+
+1. 如何连接MongoDB, 以及MongoDB的配置
+2. 基于MongoDB的 CRUD
+    + bson struct tag: 用于MongoDB 保存时，完成Object -> 
+    + "_id": 内置的BSON TAG, 类似于MySQL主键, _: 代表的倒序索引, 不用额外多创建一个Index, 最好沿用 
+    + 通过DB对象的Collection对象来 进行CRUD操作
+    + 
 ```shell
 # 创建MongoDB 库用户
 use admin
@@ -10,10 +19,62 @@ db.auth("admin", "123456")
 use keyauth
 db.createUser({user: "keyauth", pwd: "123456", roles: [{ role: "dbOwner", db: "keyauth" }]})
 ```
-注册中心
+
+## 对接注册中心
+
+注册中心使用的mcenter服务: https://github.com/infraboard/mcenter
 ```shell
 使用 0.0.5 版本初始化MongoDB以及注册
 ```
+主题: 服务发现
+ + 服务注册
+    1. 添加注册中心的配置
+    2. 然后初始化全局的 注册中心客户端实例 rpc.C()
+    3. GRPC 服务启动时 调用 注册中心的客户端把 当前GPRC监听的地址注册过期
+    4. 当GRPC服务Stop时, 注销注册中心的实例
+ + 服务解索(GRPC Client)
+    1. 通过GRPC 的NamedResolver 来进行服务的发现
+    2. 也是加载 注册中心 的 GRPC客户端: rpc.C() --? , 
+        因为 Mcenter 提供的Resolver需要依赖 注册中心的客户端来进行 服务实例的搜索
+    3. 在服务启动的时候 初始化的时候 就完成以上步骤
+    4. GRPC客户端 配置注册中心的访问凭证, 已经需要访问的服务的名称, Resovler就能完成服务名称--》 
+       地址的解析
+
+
+准备完成 Keyauth的客户端, CMDB 就可以通过该客户端来和Keyauth进行交互
+```go
+// keyauth 客户端
+// 需要配置注册中心的地址
+// 获取注册中心的客户端，使用注册中心的客户端 查询 keyauth的地址
+func TestBookQuery(t *testing.T) {
+	should := assert.New(t)
+
+	conf := mcenter.NewDefaultConfig()
+	conf.Address = os.Getenv("MCENTER_ADDRESS")
+	conf.ClientID = os.Getenv("MCENTER_CDMB_CLINET_ID")
+	conf.ClientSecret = os.Getenv("MCENTER_CMDB_CLIENT_SECRET")
+
+	// 把Mcenter的配置传递给Keyauth的客户端
+	c, err := rpc.NewClient(conf)
+
+	// 使用SDK 调用Keyauth进行 凭证的校验
+	// c.Token().ValidateToken()
+
+	if should.NoError(err) {
+		resp, err := c.Token().ValidateToken(
+			context.Background(),
+			token.NewValidateTokenRequest("yTGTAj3fnPWqXIEkuicr57bf1"),
+		)
+		should.NoError(err)
+		fmt.Println(resp)
+	}
+}
+```
+
+cmdb 如何使用Keyauth的客户端进行 Token的校验, 需要一个HTTP 的 认证中间件:
+
+因为Keyauth是用户中心, HTTP的权限中间件需要和keyauth交互, 依赖Keyatuh的SDK, 因此这个中间件有 keyauth提供
+
 
 
 ## 架构图
@@ -67,7 +128,7 @@ db.createUser({user: "keyauth", pwd: "123456", roles: [{ role: "dbOwner", db: "k
 ## 快速开发
 make脚手架
 ```sh
-➜  keyauth git:(master) ✗ make help
+➜  keyauth-g7 git:(master) ✗ make help
 dep                            Get the dependencies
 lint                           Lint Golang files
 vet                            Run go vet
@@ -94,10 +155,10 @@ $ ls `go env GOPATH`/pkg/mod/github.com/infraboard/
 $ cp -rf pb  /usr/local/include/github.com/infraboard/mcube/pb
 ```
 
-2. 添加配置文件(默认读取位置: etc/keyauth.toml)
+2. 添加配置文件(默认读取位置: etc/keyauth-g7.toml)
 ```sh
-$ 编辑样例配置文件 etc/keyauth.toml.book
-$ mv etc/keyauth.toml.book etc/keyauth.toml
+$ 编辑样例配置文件 etc/keyauth-g7.toml.book
+$ mv etc/keyauth-g7.toml.book etc/keyauth-g7.toml
 ```
 
 3. 启动服务
