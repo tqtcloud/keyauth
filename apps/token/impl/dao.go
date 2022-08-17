@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/infraboard/mcube/exception"
-	"github/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/apps/token"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

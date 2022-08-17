@@ -2,7 +2,7 @@ package swagger
 
 import (
 	"github.com/go-openapi/spec"
-	"github/tqtcloud/keyauth/version"
+	"github.com/tqtcloud/keyauth/version"
 )
 
 func Docs(swo *spec.Swagger) {

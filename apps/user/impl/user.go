@@ -3,8 +3,8 @@ package impl
 import (
 	"context"
 	"github.com/infraboard/mcube/exception"
-	"github/tqtcloud/keyauth/apps/user"
-	"github/tqtcloud/keyauth/common/utils"
+	"github.com/tqtcloud/keyauth/apps/user"
+	"github.com/tqtcloud/keyauth/common/utils"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

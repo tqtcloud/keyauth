@@ -1,7 +1,7 @@
 PROJECT_NAME := "keyauth"
 MAIN_FILE_PAHT := "main.go"
-PKG := "github/tqtcloud/keyauth"
-IMAGE_PREFIX := "github/tqtcloud/keyauth"
+PKG := "github.com/tqtcloud/keyauth"
+IMAGE_PREFIX := "github.com/tqtcloud/keyauth"
 
 MOD_DIR := $(shell go env GOPATH)/pkg/mod
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v redis)

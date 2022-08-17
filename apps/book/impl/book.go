@@ -6,7 +6,7 @@ import (
 	"github.com/infraboard/mcube/exception"
 	"github.com/infraboard/mcube/pb/request"
 
-	"github/tqtcloud/keyauth/apps/book"
+	"github.com/tqtcloud/keyauth/apps/book"
 )
 
 func (s *service) CreateBook(ctx context.Context, req *book.CreateBookRequest) (

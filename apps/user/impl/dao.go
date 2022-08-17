@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/infraboard/mcube/exception"
-	"github/tqtcloud/keyauth/apps/user"
+	"github.com/tqtcloud/keyauth/apps/user"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

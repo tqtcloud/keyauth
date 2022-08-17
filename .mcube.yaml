@@ -1,4 +1,4 @@
-pkg: github/tqtcloud/keyauth
+pkg: github.com/tqtcloud/keyauth
 name: keyauth
 description: 权限中心
 enable_keyauth: false

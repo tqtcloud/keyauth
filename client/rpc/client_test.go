@@ -3,13 +3,13 @@ package rpc_test
 import (
 	"context"
 	"fmt"
-	"github/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/apps/token"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github/tqtcloud/keyauth/client/rpc"
+	"github.com/tqtcloud/keyauth/client/rpc"
 
 	mcenter "github.com/infraboard/mcenter/client/rpc"
 )

@@ -14,11 +14,11 @@ import (
 	"github.com/infraboard/mcube/logger"
 	"github.com/infraboard/mcube/logger/zap"
 
-	"github/tqtcloud/keyauth/conf"
-	"github/tqtcloud/keyauth/protocol"
+	"github.com/tqtcloud/keyauth/conf"
+	"github.com/tqtcloud/keyauth/protocol"
 
 	// 注册所有服务
-	_ "github/tqtcloud/keyauth/apps/all"
+	_ "github.com/tqtcloud/keyauth/apps/all"
 )
 
 // startCmd represents the start command

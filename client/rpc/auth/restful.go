@@ -5,8 +5,8 @@ import (
 	"github.com/infraboard/mcube/exception"
 	"github.com/infraboard/mcube/http/label"
 	"github.com/infraboard/mcube/http/response"
-	"github/tqtcloud/keyauth/apps/token"
-	"github/tqtcloud/keyauth/common/utils"
+	"github.com/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/common/utils"
 )
 
 // Go-Restful auth Middleware

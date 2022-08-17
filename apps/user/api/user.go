@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/emicklei/go-restful/v3"
 	"github.com/infraboard/mcube/http/response"
-	"github/tqtcloud/keyauth/apps/user"
+	"github.com/tqtcloud/keyauth/apps/user"
 )
 
 func (h *handler) CreateUser(r *restful.Request, w *restful.Response) {

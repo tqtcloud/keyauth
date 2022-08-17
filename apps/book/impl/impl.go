@@ -8,8 +8,8 @@ import (
 	"github.com/infraboard/mcube/logger/zap"
 	"google.golang.org/grpc"
 
-	"github/tqtcloud/keyauth/apps/book"
-	"github/tqtcloud/keyauth/conf"
+	"github.com/tqtcloud/keyauth/apps/book"
+	"github.com/tqtcloud/keyauth/conf"
 )
 
 var (

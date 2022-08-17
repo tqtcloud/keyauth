@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github/tqtcloud/keyauth/version"
+	"github.com/tqtcloud/keyauth/version"
 )
 
 var (

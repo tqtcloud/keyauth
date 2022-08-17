@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github/tqtcloud/keyauth/cmd"
+	"github.com/tqtcloud/keyauth/cmd"
 )
 
 func main() {

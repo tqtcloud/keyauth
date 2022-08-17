@@ -3,8 +3,8 @@ package auth
 import (
 	"github.com/infraboard/mcube/logger"
 	"github.com/infraboard/mcube/logger/zap"
-	"github/tqtcloud/keyauth/apps/token"
-	"github/tqtcloud/keyauth/client/rpc"
+	"github.com/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/client/rpc"
 )
 
 func NewKeyauthAuther(client *rpc.ClientSet, serviceName string) *KeyauthAuther {

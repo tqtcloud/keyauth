@@ -7,7 +7,7 @@ import (
 	"github.com/infraboard/mcenter/client/rpc/resolver"
 	"github.com/infraboard/mcube/logger"
 	"github.com/infraboard/mcube/logger/zap"
-	"github/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/apps/token"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

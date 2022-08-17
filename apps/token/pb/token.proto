@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package keyauth.token;
-option go_package = "github/tqtcloud/keyauth/apps/token";
+option go_package = "github.com/tqtcloud/keyauth/apps/token";
 
 import "github.com/infraboard/mcube/pb/page/page.proto";
 

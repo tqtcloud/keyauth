@@ -5,7 +5,7 @@ import (
 	"github.com/infraboard/mcube/http/request"
 	pb_request "github.com/infraboard/mcube/pb/request"
 	"github.com/rs/xid"
-	"github/tqtcloud/keyauth/common/utils"
+	"github.com/tqtcloud/keyauth/common/utils"
 	"net/http"
 	"time"
 )

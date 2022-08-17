@@ -13,8 +13,8 @@ import (
 
 	"github.com/infraboard/mcube/app"
 
-	"github/tqtcloud/keyauth/conf"
-	"github/tqtcloud/keyauth/swagger"
+	"github.com/tqtcloud/keyauth/conf"
+	"github.com/tqtcloud/keyauth/swagger"
 )
 
 // NewHTTPService 构建函数

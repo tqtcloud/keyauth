@@ -8,7 +8,7 @@ import (
 	"github.com/infraboard/mcube/logger"
 	"github.com/infraboard/mcube/logger/zap"
 
-	"github/tqtcloud/keyauth/apps/book"
+	"github.com/tqtcloud/keyauth/apps/book"
 )
 
 var (

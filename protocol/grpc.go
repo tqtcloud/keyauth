@@ -2,7 +2,7 @@ package protocol
 
 import (
 	"context"
-	"github/tqtcloud/keyauth/conf"
+	"github.com/tqtcloud/keyauth/conf"
 	"net"
 	"time"
 

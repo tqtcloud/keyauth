@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github/tqtcloud/keyauth/apps/book"
+	"github.com/tqtcloud/keyauth/apps/book"
 
 	"github.com/infraboard/mcube/exception"
 	"go.mongodb.org/mongo-driver/bson"

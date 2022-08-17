@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/emicklei/go-restful/v3"
 	"github.com/infraboard/mcube/http/response"
-	"github/tqtcloud/keyauth/apps/token"
-	"github/tqtcloud/keyauth/common/utils"
+	"github.com/tqtcloud/keyauth/apps/token"
+	"github.com/tqtcloud/keyauth/common/utils"
 )
 
 func (h *handler) IssueToken(r *restful.Request, w *restful.Response) {

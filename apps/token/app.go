@@ -3,8 +3,8 @@ package token
 import (
 	"fmt"
 	"github.com/infraboard/mcube/exception"
-	"github/tqtcloud/keyauth/apps/user"
-	"github/tqtcloud/keyauth/common/utils"
+	"github.com/tqtcloud/keyauth/apps/user"
+	"github.com/tqtcloud/keyauth/common/utils"
 	"time"
 )
 
