@@ -2,6 +2,8 @@
 GRPC 注册
 ![image](https://user-images.githubusercontent.com/86145643/185567165-30668896-26b2-484d-af51-e6e198c552eb.png)
 
+注册流程参考：https://mp.weixin.qq.com/s/CPi_sPaTUR1JYl7NEybFhQ
+
 # Keyauth SDK
 ```go
 // keyauth 客户端
