@@ -7,6 +7,10 @@ import (
 	"github.com/infraboard/mcenter/client/rpc/resolver"
 	"github.com/infraboard/mcube/logger"
 	"github.com/infraboard/mcube/logger/zap"
+	"github.com/tqtcloud/keyauth/apps/audit"
+	"github.com/tqtcloud/keyauth/apps/endpoint"
+	"github.com/tqtcloud/keyauth/apps/policy"
+	"github.com/tqtcloud/keyauth/apps/role"
 	"github.com/tqtcloud/keyauth/apps/token"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -60,4 +64,24 @@ type ClientSet struct {
 // Token服务的SDK
 func (c *ClientSet) Token() token.ServiceClient {
 	return token.NewServiceClient(c.conn)
+}
+
+// Endpoint服务的SDK
+func (c *ClientSet) Endpoint() endpoint.RPCClient {
+	return endpoint.NewRPCClient(c.conn)
+}
+
+// Role服务的SDK
+func (c *ClientSet) Role() role.RPCClient {
+	return role.NewRPCClient(c.conn)
+}
+
+// Policy服务的SDK
+func (c *ClientSet) Policy() policy.RPCClient {
+	return policy.NewRPCClient(c.conn)
+}
+
+// Audit服务的SDK
+func (c *ClientSet) Audit() audit.RPCClient {
+	return audit.NewRPCClient(c.conn)
 }

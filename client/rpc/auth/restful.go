@@ -4,9 +4,13 @@ import (
 	"github.com/emicklei/go-restful/v3"
 	"github.com/infraboard/mcube/exception"
 	"github.com/infraboard/mcube/http/label"
+	"github.com/infraboard/mcube/http/request"
 	"github.com/infraboard/mcube/http/response"
+	"github.com/tqtcloud/keyauth/apps/audit"
+	"github.com/tqtcloud/keyauth/apps/policy"
 	"github.com/tqtcloud/keyauth/apps/token"
 	"github.com/tqtcloud/keyauth/common/utils"
+	"time"
 )
 
 // Go-Restful auth Middleware
@@ -62,83 +66,83 @@ func (a *KeyauthAuther) RestfulAuthHandlerFunc(
 	}
 
 	// 获取meta信息, get, 判断是否开启鉴权
-	//var isPermEnable bool
-	//if authV, ok := meta[label.Permission]; ok {
-	//	switch v := authV.(type) {
-	//	case bool:
-	//		isPermEnable = v
-	//	case string:
-	//		isPermEnable = v == "true"
-	//	}
-	//}
+	var isPermEnable bool
+	if authV, ok := meta[label.Permission]; ok {
+		switch v := authV.(type) {
+		case bool:
+			isPermEnable = v
+		case string:
+			isPermEnable = v == "true"
+		}
+	}
 
 	// 认证后，才能鉴权
-	//if isAuthEnable && isPermEnable {
-	//	tk := req.Attribute("token").(*token.Token)
-	//	permReq := policy.NewValidatePermissionRequest()
-	//	permReq.Service = a.serviceName
-	//	permReq.Username = tk.Data.UserName
-	//
-	//	if meta != nil {
-	//		if v, ok := meta[label.Resource]; ok {
-	//			permReq.Resource, _ = v.(string)
-	//		}
-	//		if v, ok := meta[label.Action]; ok {
-	//			permReq.Action, _ = v.(string)
-	//		}
-	//	}
-	//
-	//	_, err := a.perm.ValidatePermission(req.Request.Context(), permReq)
-	//	if err != nil {
-	//		response.Failed(resp.ResponseWriter, exception.NewPermissionDeny(err.Error()))
-	//		return
-	//	}
-	//}
+	if isAuthEnable && isPermEnable {
+		tk := req.Attribute("token").(*token.Token)
+		permReq := policy.NewValidatePermissionRequest()
+		permReq.Service = a.serviceName
+		permReq.Username = tk.Data.UserName
+
+		if meta != nil {
+			if v, ok := meta[label.Resource]; ok {
+				permReq.Resource, _ = v.(string)
+			}
+			if v, ok := meta[label.Action]; ok {
+				permReq.Action, _ = v.(string)
+			}
+		}
+
+		_, err := a.perm.ValidatePermission(req.Request.Context(), permReq)
+		if err != nil {
+			response.Failed(resp.ResponseWriter, exception.NewPermissionDeny(err.Error()))
+			return
+		}
+	}
 
 	// 获取meta信息, get, 判断是否开启鉴权
-	//var isAuditEnable bool
-	//if authV, ok := meta[label.Audit]; ok {
-	//	switch v := authV.(type) {
-	//	case bool:
-	//		isAuditEnable = v
-	//	case string:
-	//		isAuditEnable = v == "true"
-	//	}
-	//}
+	var isAuditEnable bool
+	if authV, ok := meta[label.Audit]; ok {
+		switch v := authV.(type) {
+		case bool:
+			isAuditEnable = v
+		case string:
+			isAuditEnable = v == "true"
+		}
+	}
 
-	//start := time.Now()
+	start := time.Now()
 
 	// chain 用于将请求flow下去
 	chain.ProcessFilter(req, resp)
 
-	//cost := time.Now().Sub(start).Milliseconds()
+	cost := time.Now().Sub(start).Milliseconds()
 
 	// 如果有记录Respone需求的话，需要在Process才有进行的
 	// 认证后，才能审计
-	//if isAuthEnable && isAuditEnable {
-	//	tk := req.Attribute("token").(*token.Token)
-	//	auditReq := audit.NewOperateLog(tk.Data.UserName, "", "")
-	//	auditReq.Service = a.serviceName
-	//	auditReq.Url = req.Request.URL.String()
-	//	auditReq.Cost = cost
-	//	auditReq.StatusCode = int64(resp.StatusCode())
-	//	auditReq.UserAgent = req.Request.UserAgent()
-	//	// X-Forwar-For
-	//	auditReq.RemoteIp = request.GetRemoteIP(req.Request)
-	//
-	//	if meta != nil {
-	//		if v, ok := meta[label.Resource]; ok {
-	//			auditReq.Resource, _ = v.(string)
-	//		}
-	//		if v, ok := meta[label.Action]; ok {
-	//			auditReq.Action, _ = v.(string)
-	//		}
-	//	}
-	//
-	//	_, err := a.audit.AuditOperate(req.Request.Context(), auditReq)
-	//	if err != nil {
-	//		a.log.Warnf("audit operate failed, %s", err)
-	//		return
-	//	}
-	//}
+	if isAuthEnable && isAuditEnable {
+		tk := req.Attribute("token").(*token.Token)
+		auditReq := audit.NewOperateLog(tk.Data.UserName, "", "")
+		auditReq.Service = a.serviceName
+		auditReq.Url = req.Request.URL.String()
+		auditReq.Cost = cost
+		auditReq.StatusCode = int64(resp.StatusCode())
+		auditReq.UserAgent = req.Request.UserAgent()
+		// X-Forwar-For
+		auditReq.RemoteIp = request.GetRemoteIP(req.Request)
+
+		if meta != nil {
+			if v, ok := meta[label.Resource]; ok {
+				auditReq.Resource, _ = v.(string)
+			}
+			if v, ok := meta[label.Action]; ok {
+				auditReq.Action, _ = v.(string)
+			}
+		}
+
+		_, err := a.audit.AuditOperate(req.Request.Context(), auditReq)
+		if err != nil {
+			a.log.Warnf("audit operate failed, %s", err)
+			return
+		}
+	}
 }
