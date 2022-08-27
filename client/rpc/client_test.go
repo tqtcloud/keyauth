@@ -3,6 +3,8 @@ package rpc_test
 import (
 	"context"
 	"fmt"
+	"github.com/tqtcloud/keyauth/apps/audit"
+	"github.com/tqtcloud/keyauth/apps/policy"
 	"github.com/tqtcloud/keyauth/apps/token"
 	"os"
 	"testing"
@@ -45,6 +47,52 @@ func TestBookQuery(t *testing.T) {
 		)
 		should.NoError(err)
 		fmt.Println(resp)
+	}
+}
+
+// 测试鉴权
+func TestValidatePermission(t *testing.T) {
+	should := assert.New(t)
+
+	conf := mcenter.NewDefaultConfig()
+	conf.Address = os.Getenv("MCENTER_ADDRESS")
+	conf.ClientID = os.Getenv("MCENTER_CDMB_CLINET_ID")
+	conf.ClientSecret = os.Getenv("MCENTER_CMDB_CLIENT_SECRET")
+
+	// 传递Mcenter配置, 客户端通过Mcenter进行搜索, New一个用户中心的客户端
+	keyauthClient, err := rpc.NewClient(conf)
+	if should.NoError(err) {
+		req := policy.NewValidatePermissionRequest()
+		req.Username = "member"
+		req.Service = "cmdb"
+		req.Resource = "secret"
+		req.Action = "delete"
+
+		p, err := keyauthClient.Policy().ValidatePermission(context.TODO(), req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Log(p)
+	}
+}
+
+func TestAuditOperate(t *testing.T) {
+	should := assert.New(t)
+
+	conf := mcenter.NewDefaultConfig()
+	conf.Address = os.Getenv("MCENTER_ADDRESS")
+	conf.ClientID = os.Getenv("MCENTER_CDMB_CLINET_ID")
+	conf.ClientSecret = os.Getenv("MCENTER_CMDB_CLIENT_SECRET")
+
+	// 传递Mcenter配置, 客户端通过Mcenter进行搜索, New一个用户中心的客户端
+	keyauthClient, err := rpc.NewClient(conf)
+	if should.NoError(err) {
+		req := audit.NewOperateLog("member", "secret", "delete")
+		p, err := keyauthClient.Audit().AuditOperate(context.TODO(), req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Log(p)
 	}
 }
 

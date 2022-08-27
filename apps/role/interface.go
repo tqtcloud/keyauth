@@ -56,7 +56,7 @@ func (p *Permission) HasPermission(req *PermissionRequest) bool {
 	}
 
 	// 放行所有功能
-	if p.AllowAll {
+	if p.Allow {
 		return true
 	}
 

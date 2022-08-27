@@ -61,8 +61,8 @@ message Permission {
   // @gotags: json:"service" bson:"service"
   string service = 1;
   // 是否允许访问所有功能
-  // @gotags: json:"allow_all" bson:"allow_all
-  bool allow_all = 3;
+  // @gotags: json:"allow" bson:"allow
+  bool allow = 3;
   // 服务功能
   // @gotags: json:"featrues" bson:"featrues"
   repeated Featrue featrues = 2;
